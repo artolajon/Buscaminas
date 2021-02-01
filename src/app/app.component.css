@@ -1,0 +1,17 @@
+#juego{
+  background-color: grey;
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+}
+#opciones{
+  background-color: lightgray;
+  height: 100px;
+  width: 75%;
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  z-index: 2;
+}
