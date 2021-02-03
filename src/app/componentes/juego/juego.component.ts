@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Celda } from 'src/app/modelos/celda';
 import { Configuracion } from 'src/app/modelos/configuracion';
+import * as shuffle from 'shuffle-array';
+
 
 @Component({
   selector: 'app-juego',
@@ -13,6 +15,8 @@ export class JuegoComponent implements OnInit {
   refCeldas:Celda[];
 
   configuracion: Configuracion;
+
+  bombasAsignadas:boolean = false;
 
   constructor() { }
 
@@ -33,11 +37,88 @@ export class JuegoComponent implements OnInit {
       let linea=[];
       for (let j=0; j<this.configuracion.limiteColumnas; j++){
         let celda = new Celda();
+
+        celda.linea=i;
+        celda.columna=j;
+
         linea.push(celda);
         this.refCeldas.push(celda);
       }
       mapa.push(linea);
     }
     this.mapa = mapa;
+  }
+
+  asignarBombas(){
+    this.refCeldas = shuffle(this.refCeldas);
+
+    let cantidadBombas = this.refCeldas.length * this.configuracion.porcentajeBombas /100;
+    for(let i=0; i<this.refCeldas.length; i++){
+      let celda = this.refCeldas[i];
+      if (celda.estado == 0){
+        cantidadBombas--;
+        celda.valor = 9;
+        this.establecerArea(celda.linea, celda.columna);
+
+        if (cantidadBombas<=0)
+          break;
+      }
+
+
+    }
+  }
+
+  establecerArea(linea: number, columna:number){
+    this.subirValor(linea+1, columna+1);
+    this.subirValor(linea+1, columna);
+    this.subirValor(linea+1, columna-1);
+
+    this.subirValor(linea, columna+1);
+    this.subirValor(linea, columna-1);
+
+    this.subirValor(linea-1, columna+1);
+    this.subirValor(linea-1, columna);
+    this.subirValor(linea-1, columna-1);
+  }
+
+  subirValor(linea: number, columna:number){
+    if(this.mapa[linea] && this.mapa[linea][columna])
+      this.mapa[linea][columna].valor++;
+  }
+
+  abrirCelda(linea: number, columna:number){
+    if(this.mapa[linea] && this.mapa[linea][columna]){
+      let celda = this.mapa[linea][columna];
+
+      if (celda.estado == 0 ){
+        celda.estado=1;
+        if (!this.bombasAsignadas){
+          this.bombasAsignadas=true;
+          this.asignarBombas();
+        }
+
+
+
+        if (celda.valor==0){
+          this.abrirArea(celda.linea, celda.columna);
+        }
+        else if (celda.valor>=9){
+          console.log("pierdes");
+        }
+      }
+    }
+  }
+
+  abrirArea(linea: number, columna:number){
+    this.abrirCelda(linea+1, columna+1);
+    this.abrirCelda(linea+1, columna);
+    this.abrirCelda(linea+1, columna-1);
+
+    this.abrirCelda(linea, columna+1);
+    this.abrirCelda(linea, columna-1);
+
+    this.abrirCelda(linea-1, columna+1);
+    this.abrirCelda(linea-1, columna);
+    this.abrirCelda(linea-1, columna-1);
   }
 }

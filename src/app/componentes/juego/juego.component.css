@@ -1,5 +1,6 @@
 #mapa{
   display: inline-block;
+  margin: 50%;
 }
 
 .linea{
@@ -14,4 +15,35 @@
   text-align: center;
   vertical-align: middle;
   line-height: 50px;
+  font-weight: bold;
+}
+.abierto{
+  background-color: rgb(119, 119, 119);
+}
+.explotado{
+  background-color: red;
+}
+.celda>.valor-1{
+  color: blue
+}
+.celda>.valor-2{
+  color: green;
+}
+.celda>.valor-3{
+  color: red;
+}
+.celda>.valor-4{
+  color: purple;
+}
+.celda>.valor-5{
+  color: maroon;
+}
+.celda>.valor-6{
+  color: turquoise;
+}
+.celda>.valor-7{
+  color: black;
+}
+.celda>.valor-8{
+  color: gray;
 }
