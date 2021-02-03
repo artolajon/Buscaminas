@@ -19,7 +19,9 @@
     "@angular/platform-browser": "~11.1.0",
     "@angular/platform-browser-dynamic": "~11.1.0",
     "@angular/router": "~11.1.0",
+    "ngx-drag-scroll": "^9.0.0-beta.4",
     "rxjs": "~6.6.0",
+    "shuffle-array": "^1.0.1",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
   },
