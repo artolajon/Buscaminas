@@ -4,11 +4,13 @@ import { DragScrollModule } from 'ngx-drag-scroll';
 
 import { AppComponent } from './app.component';
 import { JuegoComponent } from './componentes/juego/juego.component';
+import { ControlesComponent } from './componentes/controles/controles.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    JuegoComponent
+    JuegoComponent,
+    ControlesComponent
   ],
   imports: [
     BrowserModule,

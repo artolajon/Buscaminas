@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Configuracion } from './modelos/configuracion';
+import { Partida } from './modelos/partida';
 
 @Component({
   selector: 'app-root',
