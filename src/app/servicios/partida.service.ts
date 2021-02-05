@@ -10,11 +10,16 @@ export class PartidaService {
 
   private _partidaSource = new Subject<Partida>();
   partida$ = this._partidaSource.asObservable();
-  configuracion = new Configuracion();
+  private _configuracionSource = new Subject<Configuracion>();
+  configuracion$ = this._configuracionSource.asObservable();
 
   constructor() { }
 
   cambiosEnPartida(partida){
     this._partidaSource.next(partida);
+  }
+
+  cambiosEnConfiguracion(configuracion){
+    this._configuracionSource.next(configuracion);
   }
 }

@@ -1,6 +1,5 @@
 export class Partida {
-  inicio: Date;
-  fin:Date;
+  duracion: number = 0;
   estado:number = 0;
   bombasSinDescubrir: number=0;
 }

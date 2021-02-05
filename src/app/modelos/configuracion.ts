@@ -1,5 +1,5 @@
 export class Configuracion {
-  limiteLineas: number;
-  limiteColumnas: number;
-  porcentajeBombas: number;
+  limiteLineas: number = 16;
+  limiteColumnas: number = 30;
+  porcentajeBombas: number = 10;
 }

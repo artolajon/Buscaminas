@@ -18,17 +18,16 @@ export class JuegoComponent implements OnInit {
   bombasAsignadas:boolean = false;
 
   partida = new Partida;
-  configuracion: Configuracion;
+  configuracion = new Configuracion;
 
 
   constructor(private partidaService: PartidaService) { }
 
   ngOnInit(): void {
-    this.configuracion = {
-      limiteColumnas: 30,
-      limiteLineas: 16,
-      porcentajeBombas: 10,
-    };
+    this.partidaService.configuracion$.subscribe(conf=>{
+      this.configuracion = conf;
+    })
+
 
     this.partidaService.partida$.subscribe(p=>{
       this.partida = p;
