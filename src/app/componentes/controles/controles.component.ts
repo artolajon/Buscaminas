@@ -20,6 +20,7 @@ export class ControlesComponent implements OnInit {
   constructor(private partidaService: PartidaService) { }
 
   ngOnInit(): void {
+
     this.partidaService.partida$.subscribe(p=>{
       this.partida = p;
       if (p.estado == 1)
@@ -31,6 +32,7 @@ export class ControlesComponent implements OnInit {
     this.partidaService.configuracion$.subscribe(conf=>{
       this.configuracion = conf;
     })
+    this.nuevaPartida();
   }
 
   nuevaPartida(){
@@ -38,7 +40,8 @@ export class ControlesComponent implements OnInit {
       this.reloj$.unsubscribe();
     this.partida.estado = 0;
     this.partida.duracion = 0;
-    this.partida.bombasSinDescubrir = 100;
+    let bombas = this.configuracion.limiteColumnas * this.configuracion.limiteLineas * this.configuracion.porcentajeBombas / 100;
+    this.partida.bombasSinDescubrir = Math.floor(bombas);
     this.partidaService.cambiosEnPartida(this.partida);
   }
 
