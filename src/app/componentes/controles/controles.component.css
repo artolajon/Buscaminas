@@ -13,3 +13,14 @@
 button{
   padding: 5px 2rem;
 }
+
+.grid>div{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+img{
+  width: 50px;
+}

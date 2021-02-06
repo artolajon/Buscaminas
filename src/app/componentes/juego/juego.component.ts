@@ -151,4 +151,26 @@ export class JuegoComponent implements OnInit {
     this.abrirCelda(linea-1, columna);
     this.abrirCelda(linea-1, columna-1);
   }
+
+
+  marcarCelda(linea: number, columna:number){
+    if (this.partida.estado<2){
+      if(this.mapa[linea] && this.mapa[linea][columna]){
+        let celda = this.mapa[linea][columna];
+
+        if (celda.estado == 0){
+          celda.estado=2;
+
+          this.partida.bombasSinDescubrir--;
+          this.partidaService.cambiosEnPartida(this.partida);
+        }else if(celda.estado == 2){
+          celda.estado=0;
+
+          this.partida.bombasSinDescubrir++;
+          this.partidaService.cambiosEnPartida(this.partida);
+        }
+      }
+    }
+    return false;
+  }
 }

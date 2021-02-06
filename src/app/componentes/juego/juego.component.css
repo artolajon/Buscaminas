@@ -47,3 +47,7 @@
 .celda>.valor-8{
   color: gray;
 }
+
+.celda>img{
+  width: 100%;
+}
