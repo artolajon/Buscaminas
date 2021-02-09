@@ -117,10 +117,13 @@ export class JuegoComponent implements OnInit {
 
 
 
-          if (celda.valor==0){
-            this.abrirArea(celda.linea, celda.columna);
+          if (celda.valor<9){
+            if (celda.valor==0)
+              this.abrirArea(celda.linea, celda.columna);
+
+            this.combrobarFinDePartida();
           }
-          else if (celda.valor>=9){
+          else{
 
             this.mostrarBombas();
             this.partida.estado = 2;
@@ -128,6 +131,13 @@ export class JuegoComponent implements OnInit {
           }
         }
       }
+    }
+  }
+
+  combrobarFinDePartida(){
+    if (this.refCeldas.some(c=> c.estado == 0 && c.valor < 9) == false){
+      this.partida.estado = 3;
+      this.partidaService.cambiosEnPartida(this.partida);
     }
   }
 

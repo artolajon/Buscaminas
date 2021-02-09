@@ -27,6 +27,11 @@ export class ControlesComponent implements OnInit {
         this.reloj$ = this.reloj.subscribe(c=> this.partida.duracion++);
       if (p.estado == 2)
         this.reloj$.unsubscribe();
+      if (p.estado == 3){
+        this.reloj$.unsubscribe();
+        alert("Ganaste!!");
+      }
+
     })
 
     this.partidaService.configuracion$.subscribe(conf=>{
