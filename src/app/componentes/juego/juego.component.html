@@ -4,7 +4,7 @@
       (click)="abrirCelda(celda.linea, celda.columna)" (contextmenu)="marcarCelda(celda.linea, celda.columna)">
       <span *ngIf="celda.estado == 1 && celda.valor>0 && celda.valor<9" class="valor-{{celda.valor}}">{{celda.valor}}</span>
       <img *ngIf="celda.estado == 1 && celda.valor>=9" src="./assets/img/mine.png">
-      <span *ngIf="celda.estado == 2" class="valor-{{celda.valor}}">!</span>
+      <span *ngIf="celda.estado == 2">!</span>
     </div>
   </div>
 </div>

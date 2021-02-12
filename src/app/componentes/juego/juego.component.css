@@ -10,21 +10,29 @@
 .celda{
   width: 50px;
   height: 50px;
-  margin: .5rem;
-  background-color: lightgrey;
+  margin: .1rem;
+  background-color: rgb(44, 44, 44);
   text-align: center;
   vertical-align: middle;
   line-height: 50px;
   font-weight: bold;
+  font-size: 1.5rem;
+}
+.celda:not(.abierto){
+  color: white;
 }
 .abierto{
-  background-color: rgb(119, 119, 119);
+  background-color:  lightgrey;
+  -moz-box-shadow:    inset 0 0 10px #242424;
+  -webkit-box-shadow: inset 0 0 10px #242424;
+  box-shadow:         inset 0 0 10px #242424;
+
 }
 .explotado{
   background-color: red;
 }
 .celda>.valor-1{
-  color: blue
+  color: blue;
 }
 .celda>.valor-2{
   color: green;
