@@ -163,10 +163,13 @@ export class JuegoComponent implements OnInit {
   }
 
   combrobarFinDePartida(){
-    if (this.refCeldas.some(c=> c.estado == ESTADOS_CELDA.cerrado && c.valor < 9) == false){
-      this.partida.estado = 3;
-      this.partidaService.cambiosEnPartida(this.partida);
+    if (this.partida.estado != 3){
+      if (this.refCeldas.some(c=> c.estado == ESTADOS_CELDA.cerrado && c.valor < 9) == false){
+        this.partida.estado = 3;
+        this.partidaService.cambiosEnPartida(this.partida);
+      }
     }
+
   }
 
   mostrarBombas(){

@@ -7,7 +7,7 @@
     (click)="pulsarCelda(celda)" (contextmenu)="marcarCelda(celda)">
       <span *ngIf="celda.estado == ESTADOS.abierto && celda.valor > 0 && celda.valor < 9"
         class="valor-{{celda.valor}}">{{celda.valor}}</span>
-      <img *ngIf="celda.estado == ESTADOS.abierto && celda.valor >= 9" src="./assets/img/mine.png">
+      <img *ngIf="(celda.estado == ESTADOS.abierto || partida.estado == 3) && celda.valor >= 9" src="./assets/img/mine.png">
       <span *ngIf="celda.estado == ESTADOS.marcado">!</span>
     </div>
   </div>

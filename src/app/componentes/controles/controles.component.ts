@@ -29,7 +29,8 @@ export class ControlesComponent implements OnInit {
         this.reloj$.unsubscribe();
       if (p.estado == 3){
         this.reloj$.unsubscribe();
-        alert("Ganaste!!");
+        setTimeout(()=>alert("Ganaste!!"), 0);
+
       }
 
     })

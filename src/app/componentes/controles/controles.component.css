@@ -11,7 +11,9 @@
   font-size: 2rem;
 }
 button{
-  padding: 5px 2rem;
+  font-size: 1rem;
+  white-space: nowrap;
+  padding: 10px 1.5rem;
 }
 
 .grid>div{

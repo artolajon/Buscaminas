@@ -3,7 +3,9 @@
     {{partida.duracion | time}}
   </div>
   <div>
-    <button (click)="nuevaPartida()">{{partida?.estado == 2? ":'(":":)"}}</button>
+    <button (click)="nuevaPartida()">{{
+      partida?.estado == 2? "(╥﹏╥)":
+      (partida?.estado == 3?"ᕙ(`▿´)ᕗ":"( ◑‿◑)")}}</button>
   </div>
   <div>
     <img src="./assets/img/mine.png">
