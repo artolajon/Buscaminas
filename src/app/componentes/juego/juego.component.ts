@@ -100,6 +100,36 @@ export class JuegoComponent implements OnInit {
       this.mapa[linea][columna].valor++;
   }
 
+  pulsarCelda(celda:Celda){
+    if (celda.estado == ESTADOS_CELDA.cerrado){
+      this.abrirCelda(celda);
+    }else if (celda.estado == ESTADOS_CELDA.abierto){
+
+      if (this.obtenerCantidadDeMarcas(celda) == celda.valor){
+        this.abrirArea(celda);
+      }
+
+    }
+  }
+
+  obtenerCantidadDeMarcas({linea, columna}): number{
+    let contador = 0;
+
+    let area = new Area(linea, columna);
+    Object.keys(area).forEach(posicion =>{
+      if (this.obtenerEstado(area[posicion]) == ESTADOS_CELDA.marcado)
+        contador++;
+    });
+    return contador;
+  }
+
+  obtenerEstado({linea, columna}):number{
+    if(this.mapa[linea] && this.mapa[linea][columna]){
+      return this.mapa[linea][columna].estado;
+    }
+    return -1;
+  }
+
   abrirCelda({linea, columna}){
     if (this.partida.estado<2){
       if(this.mapa[linea] && this.mapa[linea][columna]){
@@ -133,7 +163,7 @@ export class JuegoComponent implements OnInit {
   }
 
   combrobarFinDePartida(){
-    if (this.refCeldas.some(c=> c.estado == ESTADOS_CELDA.abierto && c.valor < 9) == false){
+    if (this.refCeldas.some(c=> c.estado == ESTADOS_CELDA.cerrado && c.valor < 9) == false){
       this.partida.estado = 3;
       this.partidaService.cambiosEnPartida(this.partida);
     }
