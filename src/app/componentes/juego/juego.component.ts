@@ -5,6 +5,11 @@ import * as shuffle from 'shuffle-array';
 import { Partida } from 'src/app/modelos/partida';
 import { PartidaService } from 'src/app/servicios/partida.service';
 
+const ESTADOS_CELDA = {
+  cerrado: 0,
+  abierto: 1,
+  marcado: 2
+}
 
 @Component({
   selector: 'app-juego',
@@ -12,7 +17,7 @@ import { PartidaService } from 'src/app/servicios/partida.service';
   styleUrls: ['./juego.component.css']
 })
 export class JuegoComponent implements OnInit {
-
+  ESTADOS=ESTADOS_CELDA;
   mapa:Array<Celda[]>;
   refCeldas:Celda[];
   bombasAsignadas:boolean = false;
@@ -59,7 +64,7 @@ export class JuegoComponent implements OnInit {
 
   nuevaPartida(){
     this.refCeldas.forEach(celda => {
-      celda.estado = 0;
+      celda.estado = ESTADOS_CELDA.cerrado;
       celda.valor = 0;
     });
     this.bombasAsignadas = false;
@@ -71,7 +76,7 @@ export class JuegoComponent implements OnInit {
     let cantidadBombas = this.refCeldas.length * this.configuracion.porcentajeBombas /100;
     for(let i=0; i<this.refCeldas.length; i++){
       let celda = this.refCeldas[i];
-      if (celda.estado == 0){
+      if (celda.estado == ESTADOS_CELDA.cerrado){
         cantidadBombas--;
         celda.valor = 9;
         this.establecerArea(celda.linea, celda.columna);
@@ -107,9 +112,9 @@ export class JuegoComponent implements OnInit {
       if(this.mapa[linea] && this.mapa[linea][columna]){
         let celda = this.mapa[linea][columna];
 
-        if (celda.estado == 0 ){
-          celda.estado=1;
-          if (this.partida.estado==0){
+        if (celda.estado == ESTADOS_CELDA.cerrado ){
+          celda.estado = ESTADOS_CELDA.abierto;
+          if (this.partida.estado == 0){
             this.partida.estado = 1;
             this.partidaService.cambiosEnPartida(this.partida);
             this.asignarBombas();
@@ -135,7 +140,7 @@ export class JuegoComponent implements OnInit {
   }
 
   combrobarFinDePartida(){
-    if (this.refCeldas.some(c=> c.estado == 0 && c.valor < 9) == false){
+    if (this.refCeldas.some(c=> c.estado == ESTADOS_CELDA.abierto && c.valor < 9) == false){
       this.partida.estado = 3;
       this.partidaService.cambiosEnPartida(this.partida);
     }
@@ -168,13 +173,13 @@ export class JuegoComponent implements OnInit {
       if(this.mapa[linea] && this.mapa[linea][columna]){
         let celda = this.mapa[linea][columna];
 
-        if (celda.estado == 0){
-          celda.estado=2;
+        if (celda.estado == ESTADOS_CELDA.cerrado){
+          celda.estado = ESTADOS_CELDA.marcado;
 
           this.partida.bombasSinDescubrir--;
           this.partidaService.cambiosEnPartida(this.partida);
-        }else if(celda.estado == 2){
-          celda.estado=0;
+        }else if(celda.estado == ESTADOS_CELDA.marcado){
+          celda.estado = ESTADOS_CELDA.cerrado;
 
           this.partida.bombasSinDescubrir++;
           this.partidaService.cambiosEnPartida(this.partida);

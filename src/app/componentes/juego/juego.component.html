@@ -1,10 +1,14 @@
 <div id="mapa" (contextmenu)="false">
   <div class="linea" *ngFor="let linea of mapa">
-    <div class="celda" [ngClass]="{'abierto': celda.estado==1, 'explotado':celda.estado==1 && celda.valor>8}" *ngFor="let celda of linea"
-      (click)="abrirCelda(celda.linea, celda.columna)" (contextmenu)="marcarCelda(celda.linea, celda.columna)">
-      <span *ngIf="celda.estado == 1 && celda.valor>0 && celda.valor<9" class="valor-{{celda.valor}}">{{celda.valor}}</span>
-      <img *ngIf="celda.estado == 1 && celda.valor>=9" src="./assets/img/mine.png">
-      <span *ngIf="celda.estado == 2">!</span>
+    <div class="celda" [ngClass]="{
+      'abierto': celda.estado == ESTADOS.abierto,
+      'explotado': celda.estado == ESTADOS.abierto && celda.valor > 8
+    }" *ngFor="let celda of linea"
+    (click)="abrirCelda(celda.linea, celda.columna)" (contextmenu)="marcarCelda(celda.linea, celda.columna)">
+      <span *ngIf="celda.estado == ESTADOS.abierto && celda.valor > 0 && celda.valor < 9"
+        class="valor-{{celda.valor}}">{{celda.valor}}</span>
+      <img *ngIf="celda.estado == ESTADOS.abierto && celda.valor >= 9" src="./assets/img/mine.png">
+      <span *ngIf="celda.estado == ESTADOS.marcado">!</span>
     </div>
   </div>
 </div>
