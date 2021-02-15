@@ -4,7 +4,7 @@
       'abierto': celda.estado == ESTADOS.abierto,
       'explotado': celda.estado == ESTADOS.abierto && celda.valor > 8
     }" *ngFor="let celda of linea"
-    (click)="abrirCelda(celda.linea, celda.columna)" (contextmenu)="marcarCelda(celda.linea, celda.columna)">
+    (click)="abrirCelda(celda)" (contextmenu)="marcarCelda(celda)">
       <span *ngIf="celda.estado == ESTADOS.abierto && celda.valor > 0 && celda.valor < 9"
         class="valor-{{celda.valor}}">{{celda.valor}}</span>
       <img *ngIf="celda.estado == ESTADOS.abierto && celda.valor >= 9" src="./assets/img/mine.png">

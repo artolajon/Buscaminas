@@ -4,6 +4,7 @@ import { Configuracion } from 'src/app/modelos/configuracion';
 import * as shuffle from 'shuffle-array';
 import { Partida } from 'src/app/modelos/partida';
 import { PartidaService } from 'src/app/servicios/partida.service';
+import { Area } from 'src/app/modelos/area';
 
 const ESTADOS_CELDA = {
   cerrado: 0,
@@ -49,10 +50,7 @@ export class JuegoComponent implements OnInit {
     for (let i=0; i<this.configuracion.limiteLineas; i++){
       let linea=[];
       for (let j=0; j<this.configuracion.limiteColumnas; j++){
-        let celda = new Celda();
-
-        celda.linea=i;
-        celda.columna=j;
+        let celda = new Celda(i,j);
 
         linea.push(celda);
         this.refCeldas.push(celda);
@@ -79,7 +77,7 @@ export class JuegoComponent implements OnInit {
       if (celda.estado == ESTADOS_CELDA.cerrado){
         cantidadBombas--;
         celda.valor = 9;
-        this.establecerArea(celda.linea, celda.columna);
+        this.establecerArea(celda);
 
         if (cantidadBombas<=0)
           break;
@@ -89,25 +87,20 @@ export class JuegoComponent implements OnInit {
     }
   }
 
-  establecerArea(linea: number, columna:number){
-    this.subirValor(linea+1, columna+1);
-    this.subirValor(linea+1, columna);
-    this.subirValor(linea+1, columna-1);
+  establecerArea({linea, columna}){
+    let area = new Area(linea, columna);
 
-    this.subirValor(linea, columna+1);
-    this.subirValor(linea, columna-1);
-
-    this.subirValor(linea-1, columna+1);
-    this.subirValor(linea-1, columna);
-    this.subirValor(linea-1, columna-1);
+    Object.keys(area).forEach(posicion =>{
+      this.subirValor(area[posicion]);
+    });
   }
 
-  subirValor(linea: number, columna:number){
+  subirValor({linea, columna}){
     if(this.mapa[linea] && this.mapa[linea][columna])
       this.mapa[linea][columna].valor++;
   }
 
-  abrirCelda(linea: number, columna:number){
+  abrirCelda({linea, columna}){
     if (this.partida.estado<2){
       if(this.mapa[linea] && this.mapa[linea][columna]){
         let celda = this.mapa[linea][columna];
@@ -124,7 +117,7 @@ export class JuegoComponent implements OnInit {
 
           if (celda.valor<9){
             if (celda.valor==0)
-              this.abrirArea(celda.linea, celda.columna);
+              this.abrirArea(celda);
 
             this.combrobarFinDePartida();
           }
@@ -149,26 +142,21 @@ export class JuegoComponent implements OnInit {
   mostrarBombas(){
     this.refCeldas.forEach(celda => {
       if(celda.valor>8){
-        this.abrirCelda(celda.linea, celda.columna);
+        this.abrirCelda(celda);
       }
     })
   }
 
-  abrirArea(linea: number, columna:number){
-    this.abrirCelda(linea+1, columna+1);
-    this.abrirCelda(linea+1, columna);
-    this.abrirCelda(linea+1, columna-1);
+  abrirArea({linea, columna}){
+    let area = new Area(linea, columna);
 
-    this.abrirCelda(linea, columna+1);
-    this.abrirCelda(linea, columna-1);
-
-    this.abrirCelda(linea-1, columna+1);
-    this.abrirCelda(linea-1, columna);
-    this.abrirCelda(linea-1, columna-1);
+    Object.keys(area).forEach(posicion =>{
+      this.abrirCelda(area[posicion]);
+    });
   }
 
 
-  marcarCelda(linea: number, columna:number){
+  marcarCelda({linea, columna}){
     if (this.partida.estado<2){
       if(this.mapa[linea] && this.mapa[linea][columna]){
         let celda = this.mapa[linea][columna];
